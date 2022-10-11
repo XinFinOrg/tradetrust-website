@@ -29,6 +29,7 @@ export enum ChainId {
   Sepolia = 11155111,
 
   // XDC Network
+  XDC = 50,
   APOTHEM=51,
 
   // Polygon
@@ -117,6 +118,20 @@ export const ChainInfo: ChainInfo = {
     nativeCurrency: {
       name: "MATIC",
       symbol: "mMATIC",
+      decimals: 18,
+    },
+  },
+  [ChainId.XDC]: {
+    label: "XDC Network Mainnet",
+    chainId: ChainId.XDC,
+    iconImage: "/static/images/networks/xdc.png",
+    networkName: "XDC Network",
+    networkLabel: "XDC Network",
+    explorerUrl: "https://xdcscan.io",
+    rpcUrl: "https://erpc.xinfin.network",
+    nativeCurrency: {
+      name: "XDC",
+      symbol: "XDC",
       decimals: 18,
     },
   },
