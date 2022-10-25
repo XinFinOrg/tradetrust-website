@@ -28,13 +28,13 @@ export enum ChainId {
   Goerli = 5,
   Sepolia = 11155111,
 
-  // XDC Network
-  XDC = 50,
-  APOTHEM=51,
-
   // Polygon
   Polygon = 137,
   PolygonMumbai = 80001,
+
+  // XDC Network
+  XDC = 50,
+  APOTHEM=51,
 }
 
 export const ChainInfo: ChainInfo = {
