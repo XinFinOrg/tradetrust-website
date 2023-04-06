@@ -9,6 +9,8 @@ import { ButtonVideo } from "../ButtonVideo";
 import "swiper/swiper.min.css";
 import "swiper/modules/pagination/pagination.min.css";
 import "./swiper-custom.css";
+import { GaAction, GaCategory } from "../../types";
+import { gaEvent } from "@govtechsg/tradetrust-utils";
 
 interface HomeCarouselSlide {
   title: string;
@@ -49,8 +51,18 @@ export const Carousel: FunctionComponent<CarouselProps> = ({ slides }) => {
     >
       {slides.map((slide: HomeCarouselSlide, index: number) => {
         const { title, subheader, description, backgroundImage, buttonYoutube, buttonPage, buttonDownload } = slide;
-        const hasCta = buttonYoutube || buttonPage || buttonDownload;
+        const hasButtonYoutube = buttonYoutube && buttonYoutube.youtubeId; // must have cms user inputted youtubeId
+        const hasButtonButtonPage = buttonPage && buttonPage.route; // must have cms user inputted route
+        const hasButtonDownload = buttonDownload && buttonDownload.file; // must have cms user inputted file
+        const hasCta = hasButtonYoutube || hasButtonButtonPage || hasButtonDownload;
         const styleSlide = backgroundImage ? { backgroundImage: `url("${backgroundImage}")` } : {};
+        const downloadDocument = () => {
+          gaEvent({
+            category: GaCategory.FILE_DOWNLOAD,
+            action: GaAction.CAROUSEL_DOWNLOAD,
+            label: buttonDownload?.file,
+          });
+        };
 
         return (
           <SwiperSlide
@@ -76,20 +88,20 @@ export const Carousel: FunctionComponent<CarouselProps> = ({ slides }) => {
                   </div>
                   {hasCta && (
                     <div className="flex flex-wrap items-center justify-center md:justify-start">
-                      {buttonYoutube && (
+                      {hasButtonYoutube && (
                         <ButtonVideo className="mr-2">
                           <Youtube title={buttonYoutube.title} youtubeId={buttonYoutube.youtubeId} />
                         </ButtonVideo>
                       )}
-                      {buttonPage && (
+                      {hasButtonButtonPage && (
                         <Link to={buttonPage.route} data-testid="verify-button">
                           <Button size={ButtonSize.LG} className="text-white bg-cerulean-500 hover:bg-cerulean-800">
                             <h4>{buttonPage.label}</h4>
                           </Button>
                         </Link>
                       )}
-                      {buttonDownload && (
-                        <a href={buttonDownload.file} download>
+                      {hasButtonDownload && (
+                        <a href={buttonDownload.file} onClick={downloadDocument} download>
                           <Button size={ButtonSize.LG} className="text-white bg-cerulean-500 hover:bg-cerulean-800">
                             {buttonDownload.label}
                           </Button>

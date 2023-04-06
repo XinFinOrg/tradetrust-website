@@ -7,24 +7,47 @@ export interface TemplateProps {
   type: string;
 }
 
-export type TradeTrustErc721EventType = "Transfer" | "Transfer to Wallet" | "Surrender" | "Burnt";
+export type TradeTrustTokenEventType =
+  | "INITIAL"
+  | "NEW_OWNERS"
+  | "ENDORSE"
+  | "TRANSFER"
+  | "SURRENDERED"
+  | "SURRENDER_REJECTED"
+  | "SURRENDER_ACCEPTED"
+  | "TRANSFER_TO_WALLET"
+  | "INVALID";
 
-export interface TradeTrustErc721Event {
-  eventType: TradeTrustErc721EventType;
-  documentOwner: string;
-  eventTimestamp?: number;
+export type TransferEventType = TokenTransferEventType | TitleEscrowTransferEventType;
+export interface TransferBaseEvent {
+  type: TransferEventType;
+  transactionIndex: number;
+  holder?: string;
+  owner?: string;
+  transactionHash: string;
+  blockNumber: number;
 }
 
-export interface TitleEscrowEvent extends TradeTrustErc721Event {
-  beneficiary: string;
-  holderChangeEvents: {
-    blockNumber: number;
-    holder: string;
-    timestamp: number;
-  }[];
+export type TokenTransferEventType = "INITIAL" | "SURRENDERED" | "SURRENDER_REJECTED" | "SURRENDER_ACCEPTED";
+export interface TitleEscrowTransferEvent extends TransferBaseEvent {
+  type: TitleEscrowTransferEventType;
 }
 
-export type EndorsementChain = (TradeTrustErc721Event | TitleEscrowEvent)[];
+export type TitleEscrowTransferEventType = "TRANSFER_BENEFICIARY" | "TRANSFER_HOLDER" | "TRANSFER_OWNERS";
+
+export interface TokenTransferEvent extends TransferBaseEvent {
+  type: TokenTransferEventType;
+  from: string;
+  to: string;
+}
+
+export interface TransferEvent extends TransferBaseEvent {
+  timestamp: number;
+  holder: string;
+  owner: string;
+}
+
+export type EndorsementChain = TransferEvent[];
 
 export type Resource = {
   title: string;
@@ -40,10 +63,12 @@ export enum GaAction {
   MAGIC_DOWNLOADED = "magic_demo_downloaded",
   MAGIC_FILE_DROP = "magic_demo_file_drop",
   MAGIC_DROP_OFF = "magic_demo_drop_off",
+  CAROUSEL_DOWNLOAD = "carousel_file_download",
 }
 
 export enum GaCategory {
   MAGIC_DEMO = "magic_demo",
+  FILE_DOWNLOAD = "file_download",
 }
 
 export interface ActionPayload {

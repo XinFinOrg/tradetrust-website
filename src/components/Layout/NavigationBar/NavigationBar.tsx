@@ -9,6 +9,7 @@ import {
 } from "@govtechsg/tradetrust-ui-components";
 import { NavLink } from "react-router-dom";
 import { URLS } from "../../../constants";
+import { FormSgContactLink } from "../../../routes";
 
 const sharedStyles = "block w-full px-4 py-3 text-cloud-500";
 
@@ -74,6 +75,12 @@ export const leftNavItems: NavigationItem[] = [
     ],
   },
   {
+    schema: NAVIGATION_ITEM_TYPE.NavigationLink,
+    id: "cost",
+    label: "Cost",
+    path: "/cost",
+  },
+  {
     schema: NAVIGATION_ITEM_TYPE.NavigationDropDownList,
     id: "news-events",
     label: "News & Events",
@@ -106,11 +113,7 @@ export const leftNavItems: NavigationItem[] = [
     id: "contact",
     label: "Contact",
     path: "/contact",
-    customLink: (
-      <NavLink activeClassName="text-cerulean-500" className="block w-full text-current" to={"/contact"}>
-        Contact
-      </NavLink>
-    ),
+    customLink: <FormSgContactLink className="block w-full text-current">Contact</FormSgContactLink>,
   },
 ];
 
@@ -122,7 +125,12 @@ export const rightNavItems: NavigationItem[] = [
     path: "/settings",
     icon: Settings,
     customLink: (
-      <NavLink activeClassName="text-cerulean-500" className="block w-full py-2 text-current" to={"/settings"}>
+      <NavLink
+        activeClassName="text-cerulean-500"
+        className="block w-full py-2 text-current"
+        to={"/settings"}
+        aria-label="Settings"
+      >
         <Settings className="stroke-current" />
       </NavLink>
     ),
@@ -158,7 +166,7 @@ export const rightNavItems: NavigationItem[] = [
 const NavLogo = () => {
   return (
     <NavLink to={"/"} data-testid="nav-logo-home">
-      <img src="/static/images/tradetrust_logo.svg" />
+      <img src="/static/images/tradetrust_logo.svg" alt="TradeTrust Logo" />
     </NavLink>
   );
 };
