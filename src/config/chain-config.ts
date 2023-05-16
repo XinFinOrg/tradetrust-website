@@ -7,7 +7,6 @@ export const MAIN_NETWORKS = [
   ChainId.Ethereum, //
   ChainId.Polygon,
   ChainId.XDC,
-
 ];
 
 /**

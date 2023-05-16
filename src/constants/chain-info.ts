@@ -37,7 +37,7 @@ export enum ChainId {
 
   // XDC Network
   XDC = 50,
-  APOTHEM=51,
+  APOTHEM = 51,
 }
 
 export const ChainInfo: ChainInfo = {
