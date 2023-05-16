@@ -16,7 +16,8 @@ interface AssetManagementFormProps {
   holder?: string;
   approvedBeneficiary?: string;
   documentOwner?: string;
-  isMinter?: boolean;
+  isRestorer?: boolean;
+  isAcceptor?: boolean;
   tokenRegistryAddress: string;
   account?: string;
   formAction: AssetManagementActions;
@@ -56,7 +57,8 @@ export const AssetManagementForm: FunctionComponent<AssetManagementFormProps> = 
   onSurrender,
   onDestroyToken,
   documentOwner,
-  isMinter,
+  isRestorer,
+  isAcceptor,
   onTransferHolder,
   holderTransferringState,
   onEndorseBeneficiary,
@@ -82,28 +84,31 @@ export const AssetManagementForm: FunctionComponent<AssetManagementFormProps> = 
     - documentOwner is the tokenRegistry
     - currentUser === tokenRegistryMinter
   */
-  const canHandleSurrender = isTitleEscrow && isMinter && isSurrendered && documentOwner === tokenRegistryAddress;
+  const canHandleRestore = isTitleEscrow && isRestorer && isSurrendered && documentOwner === tokenRegistryAddress;
+  const canHandleShred = isTitleEscrow && isAcceptor && isSurrendered && documentOwner === tokenRegistryAddress;
 
   // canEndorseBeneficiary
   // function transferBeneficiary(address beneficiaryNominee) external;
-  // Only if isHolder and isBeneficiary, nominee is previously nominated
+  // Only if (isHolder and isBeneficiary) or (nominee is previously nominated and isHolder)
 
   // function transferHolder(address newHolder) external;
-  // onlyHolder, current holder not new holder
+  // onlyHolder, current holder !== new holder
 
   // canNominateBeneficiary
   // function nominate(address beneficiaryNominee) external;
   // Must be beneficiary, current beneficiary cannot nominate self
+  // user requirements: onlyHolder
 
   // function transferOwners(address beneficiaryNominee, address newHolder) external;
   // transferHolder
   // transferBeneficiary
 
-  const canNominateBeneficiary = isActiveTitleEscrow && isBeneficiary; // Must be beneficiary, current beneficiary cannot nominate sel)f
+  const canNominateBeneficiary = isActiveTitleEscrow && isBeneficiary && !isHolder;
+
   const hasNominee = !!approvedBeneficiary && approvedBeneficiary !== InitialAddress;
-  const canTransferBeneficiary = isActiveTitleEscrow && isBeneficiary && isHolder && hasNominee; // Only if isHolder and isBeneficiary: function transferBeneficiary(address _nominee)
+  const canTransferBeneficiary = isActiveTitleEscrow && isHolder && hasNominee;
   const canTransferHolder = isActiveTitleEscrow && isHolder;
-  const canTransferOwners = canTransferBeneficiary && canTransferHolder;
+  const canTransferOwners = isActiveTitleEscrow && isHolder && isBeneficiary;
 
   const setFormActionNone = () => {
     if (
@@ -207,7 +212,6 @@ export const AssetManagementForm: FunctionComponent<AssetManagementFormProps> = 
         <EndorseTransferForm
           formAction={formAction}
           tokenRegistryAddress={tokenRegistryAddress}
-          approvedBeneficiary={approvedBeneficiary}
           holder={holder}
           handleEndorseTransfer={transferOwners}
           transferOwnersState={transferOwnersState}
@@ -225,7 +229,8 @@ export const AssetManagementForm: FunctionComponent<AssetManagementFormProps> = 
           holder={holder}
           account={account}
           canSurrender={canSurrender}
-          canHandleSurrender={canHandleSurrender}
+          canHandleRestore={canHandleRestore}
+          canHandleShred={canHandleShred}
           onConnectToWallet={onConnectToWallet}
           canChangeHolder={canTransferHolder}
           canEndorseBeneficiary={canTransferBeneficiary}
