@@ -5,7 +5,7 @@ const originAccount = "0x8d366250A96deBE81C8619459a503a0eEBE33ca6"
 before(() => {
   cy.addMetamaskNetwork({
     networkName: 'XDC Apothem', 
-    rpcUrl: 'https://erpc.apothem.network', 
+    rpcUrl: 'https://rpc.apothem.network', 
     chainId: '51', 
     symbol: 'XDC', 
     blockExplorer: 'https://apothem.xdcscan.io', 

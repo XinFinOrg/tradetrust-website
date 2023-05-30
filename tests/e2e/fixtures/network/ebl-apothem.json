@@ -1,6 +1,6 @@
 {
   "version": "https://schema.openattestation.com/3.0/schema.json",
-  "network": { "chain": "XDC", "chainId": "51" },
+  "network": { "chain": "xdcapothem", "chainId": "51" },
   "credentialSubject": {
     "shipper": { "address": { "street": "StreetAddress", "country": "CountryAddress" }, "name": "ShipperName" },
     "consignee": { "name": "ConsigneeName" },
@@ -34,7 +34,7 @@
       "value": "0x6E0D617cc73AAa720f6cD1825a0b949c69f220D4",
       "revocation": { "type": "NONE" }
     },
-    "identityProof": { "type": "DNS-TXT", "identifier": "tradetrust-mumbai.puayhiang.com" }
+    "identityProof": { "type": "DNS-TXT", "identifier": "nasty-blush-cattle.sandbox.openattestation.com" }
   },
   "issuer": { "id": "https://example.com", "name": "DEMO TOKEN REGISTRY", "type": "OpenAttestationIssuer" },
   "proof": {
