@@ -1,7 +1,7 @@
 {
   "version": "https://schema.openattestation.com/3.0/schema.json",
   "network": {
-    "chain": "XDC",
+    "chain": "xdcapothem",
     "chainId": "51"
   },
   "credentialSubject": {
