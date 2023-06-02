@@ -16,7 +16,7 @@ export interface ChainInfoObject {
 export const InitialAddress = "0x0000000000000000000000000000000000000000";
 export const BurnAddress = "0x000000000000000000000000000000000000dEaD";
 
-export const AvailableBlockChains = ["ETH", "MATIC"];
+export const AvailableBlockChains = ["ETH", "MATIC", "XDC"];
 
 type ChainInfo = Record<ChainId, ChainInfoObject>;
 
@@ -128,7 +128,7 @@ export const ChainInfo: ChainInfo = {
     networkName: "XDC Testnet Apothem",
     networkLabel: "XDC Testnet Apothem",
     explorerUrl: "https://apothem.xdcscan.io",
-    rpcUrl: "https://erpc.apothem.network",
+    rpcUrl: "https://apothem.xdcrpc.com",
     nativeCurrency: {
       name: "XDCt",
       symbol: "XDCt",
