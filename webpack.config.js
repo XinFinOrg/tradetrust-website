@@ -23,7 +23,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
+        include: [path.resolve(__dirname, "src"), path.resolve(__dirname, "node_modules/web-did-resolver")],
         use: {
           loader: "babel-loader",
         },
@@ -46,15 +46,13 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.IgnorePlugin(/magic-sdk$/), // HOT FIX (Temp removal of magic demo until we might decide to kill it)
     new webpack.EnvironmentPlugin({
       // need to define variables here, so later can be overwritten at netlify env var end
       // TODO: use dotenv instead
       NODE_ENV: "development",
-      NET: "goerli",
+      NET: "sepolia",
       INFURA_API_KEY: "bb46da3f80e040e8ab73c0a9ff365d18",
-      ETHEREUM_PROVIDER: "notcloudflare", // temporary fix that wont be needed after oa-verify > 6
-      MAGIC_API_KEY: "",
-      MAGIC_API_KEY_FALLBACK: "",
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -72,6 +70,7 @@ module.exports = {
               { from: "public/static/images", to: "static/images" },
               { from: "public/static/demo", to: "static/demo" },
               { from: "public/static/uploads", to: "static/uploads" },
+              { from: "public/static/sitemap.xml", to: "sitemap.xml" },
               { from: "public/static/robots.txt", to: "robots.txt" },
               { from: "public/imd@", to: "imd@" },
             ],

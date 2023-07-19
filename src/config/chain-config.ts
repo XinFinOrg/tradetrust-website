@@ -13,7 +13,7 @@ export const MAIN_NETWORKS = [
  * Supported networks in development environment
  */
 export const TEST_NETWORKS = [
-  ChainId.Goerli, //
+  ChainId.Goerli, // Deprecated
   ChainId.Sepolia,
   ChainId.PolygonMumbai,
   ChainId.APOTHEM,
